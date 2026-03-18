@@ -3,62 +3,598 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TerDPI - Ilmiy bo‘lim</title>
+  <title>TerDPI — Ilmiy bo‘lim</title>
+  <meta name="description" content="Termez davlat pedagogika instituti ilmiy tadqiqotlar, innovatsiyalar va ilmiy pedagogik kadrlar tayyorlash bo‘limi rasmiy sahifasi" />
   <style>
+    :root {
+      --primary: #0f6cbd;
+      --primary-dark: #0b4f8a;
+      --accent: #00a99d;
+      --bg: #f4f7fb;
+      --text: #1e2a36;
+      --muted: #5e6b78;
+      --white: #ffffff;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #1f2d3d;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
     }
-    .hero {
-      background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=80') center/cover;
-      min-height: 100vh;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 108, 189, 0.96);
+      backdrop-filter: blur(8px);
+      color: var(--white);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .topbar-inner {
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      padding: 20px;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 72px;
     }
-    .box {
-      max-width: 900px;
-      background: rgba(0,0,0,.25);
-      padding: 40px;
-      border-radius: 20px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 20px;
     }
-    h1 {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-    p {
-      font-size: 22px;
-      line-height: 1.5;
-      margin-bottom: 28px;
-    }
-    .btn {
-      display: inline-block;
-      background: #0f6cbd;
-      color: white;
-      text-decoration: none;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-weight: bold;
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: grid;
+      place-items: center;
       font-size: 18px;
     }
-    .btn:hover {
-      background: #0b5aa0;
+
+    .nav {
+      display: flex;
+      gap: 22px;
+      font-size: 15px;
+    }
+
+    .nav a {
+      opacity: 0.95;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      background:
+        linear-gradient(rgba(6, 22, 40, 0.62), rgba(6, 22, 40, 0.72)),
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80")
+        center/cover no-repeat;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 28px;
+      align-items: center;
+      padding: 80px 0;
+    }
+
+    .hero h1 {
+      margin: 0 0 18px;
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin: 0 0 28px;
+      font-size: clamp(18px, 2.2vw, 24px);
+      max-width: 760px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 10px 24px rgba(0,169,157,0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: #009589;
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.34);
+      color: var(--white);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.16);
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .hero-card p {
+      margin: 0;
+      font-size: 15px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    section {
+      padding: 78px 0;
+    }
+
+    .section-head {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 780px;
+      font-size: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-top {
+      min-height: 170px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--white);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.16);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+    }
+
+    .card-top h3 {
+      margin: 18px 0 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .card-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .card-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text);
+    }
+
+    .list li + li {
+      margin-top: 8px;
+    }
+
+    .cta-band {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .cta-band h3 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .cta-band p {
+      margin: 0;
+      color: rgba(255,255,255,0.92);
+      max-width: 700px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .info-box {
+      background: var(--white);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .info-box h4 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+
+    .info-box p, .info-box li {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .footer {
+      background: #0f1720;
+      color: rgba(255,255,255,0.9);
+      padding: 38px 0;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer small {
+      color: rgba(255,255,255,0.65);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cards,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .cta-band {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        min-height: 64px;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid {
+        padding: 56px 0;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p,
+      .section-head p {
+        font-size: 16px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-band {
+        padding: 24px;
+      }
     }
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">🎓</div>
+        <span>TerDPI — Ilmiy bo‘lim</span>
+      </div>
+      <nav class="nav">
+        <a href="#yonalishlar">Yo‘nalishlar</a>
+        <a href="#haqida">Bo‘lim haqida</a>
+        <a href="#boglanish">Bog‘lanish</a>
+      </nav>
+    </div>
+  </header>
+
   <section class="hero">
-    <div class="box">
-      <h1>TerDPI - Ilmiy bo‘lim</h1>
-      <p>Ilmiy tadqiqotlar, innovatsiyalar va ilmiy pedagogik kadrlar tayyorlash bo‘limining rasmiy sahifasi</p>
-      <a class="btn" href="#">Ariza yuborish</a>
+    <div class="container hero-grid">
+      <div>
+        <h1>Ilmiy bo‘limning rasmiy sahifasi</h1>
+        <p>
+          Ilmiy tadqiqotlar, innovatsiyalar va ilmiy-pedagogik kadrlar
+          tayyorlash bo‘limi faoliyati, imtihonlar, arizalar va muhim e’lonlar
+          bo‘yicha yagona rasmiy platforma.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#">Ariza yuborish</a>
+          <a class="btn btn-secondary" href="#yonalishlar">Batafsil ma’lumot</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>Qisqa ma’lumot</h3>
+        <p>
+          Bo‘lim ilmiy faoliyatni muvofiqlashtirish, malakaviy jarayonlarni
+          tashkil etish va tadqiqot salohiyatini rivojlantirish bilan shug‘ullanadi.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <strong>3+</strong>
+            <span>Asosiy yo‘nalish</span>
+          </div>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>Onlayn kirish</span>
+          </div>
+          <div class="stat">
+            <strong>Rasmiy</strong>
+            <span>Institut sahifasi</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <section id="yonalishlar">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Asosiy bo‘limlar</span>
+        <h2>Talabalar va izlanuvchilar uchun muhim yo‘nalishlar</h2>
+        <p>
+          Sayt strukturasida foydalanuvchi darhol kerakli xizmatga kirishi kerak.
+          Shu sabab asosiy bo‘limlar alohida kartalar ko‘rinishida berildi.
+        </p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-top">
+            <div class="card-icon">📝</div>
+            <h3>Qo‘shimcha fanlardan malakaviy imtihonlar</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Qo‘shimcha fanlar bo‘yicha malakaviy imtihonlar, muddatlar va ariza
+              topshirish tartibi bo‘yicha rasmiy ma’lumotlar.
+            </p>
+            <ul class="list">
+              <li>Imtihon tartibi</li>
+              <li>Ariza topshirish</li>
+              <li>Muhim e’lonlar</li>
+            </ul>
+            <a class="btn btn-primary" href="#">Ariza yuborish</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div class="card-icon">📚</div>
+            <h3>Ilmiy faoliyat va innovatsiyalar</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Ilmiy loyihalar, innovatsion tashabbuslar, konferensiyalar va
+              ilmiy-amaliy ishlanmalar bo‘yicha bo‘lim ma’lumotlari.
+            </p>
+            <ul class="list">
+              <li>Konferensiyalar</li>
+              <li>Ilmiy loyihalar</li>
+              <li>Hujjatlar</li>
+            </ul>
+            <a class="btn btn-primary" href="#">Batafsil</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div class="card-icon">🎯</div>
+            <h3>Ilmiy-pedagogik kadrlar tayyorlash</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Magistratura, doktorantura, ilmiy rahbarlik va ilmiy salohiyatni
+              rivojlantirishga oid yo‘nalishlar.
+            </p>
+            <ul class="list">
+              <li>Doktorantura</li>
+              <li>Yo‘riqnomalar</li>
+              <li>Mas’ul bo‘limlar</li>
+            </ul>
+            <a class="btn btn-primary" href="#">Batafsil</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h3>Ariza topshirish jarayonini boshlang</h3>
+          <p>
+            Qo‘shimcha fanlar bo‘yicha malakaviy imtihonlarga ro‘yxatdan o‘tish
+            uchun rasmiy ariza shakliga o‘ting.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="#">Ariza yuborish</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="haqida">
+    <div class="container info-grid">
+      <div class="info-box">
+        <h4>Bo‘lim haqida</h4>
+        <p>
+          Ushbu sahifa institut ilmiy bo‘limining rasmiy axborot platformasi bo‘lib,
+          unda e’lonlar, hujjatlar, ariza yo‘llari va bo‘lim faoliyatiga oid asosiy
+          ma’lumotlar joylashtiriladi.
+        </p>
+      </div>
+
+      <div class="info-box" id="boglanish">
+        <h4>Bog‘lanish</h4>
+        <ul class="list">
+          <li>Manzil: Termez davlat pedagogika instituti</li>
+          <li>Bo‘lim: Ilmiy tadqiqotlar va innovatsiyalar</li>
+          <li>Email: example@terdpi.uz</li>
+          <li>Telefon: +998 XX XXX XX XX</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>TerDPI — Ilmiy bo‘lim</strong><br />
+        <small>Rasmiy veb-sahifa</small>
+      </div>
+      <small>© 2026 Termez davlat pedagogika instituti</small>
+    </div>
+  </footer>
 </body>
 </html>
